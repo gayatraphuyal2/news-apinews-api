@@ -36,24 +36,46 @@ const oneSignalClient = new OneSignal.Client(
 
 // ================= FEEDS =================
 const FEEDS = [
-  { name: "Baahrakhari", url: "https://baahrakhari.com/feed", profile: "" },
-  { name: "OnlineKhabar", url: "https://www.onlinekhabar.com/feed", profile: "https://www.ashesh.org/app/news/logo/onlinekhabar.jpg" },
-  { name: "Ratopati", url: "https://www.ratopati.com/feed", profile: "" },
+  { name: "Baahrakhari", url: "https://baahrakhari.com/feed", profile: "https://baahrakhari.com/themes/baahrakhari/images/logo.png" },
+  { name: "OnlineKhabar", url: "https://www.onlinekhabar.com/feed", profile: "https://www.onlinekhabar.com/wp-content/themes/onlinekhabar-2021/img/ok-icon.png" },
+  { name: "Ratopati", url: "https://www.ratopati.com/feed", profile: "https://www.ashesh.org/app/news/logo/ratopati.jpg" },
   { name: "Setopati", url: "https://www.setopati.com/feed", profile: "https://www.ashesh.org/app/news/logo/setopati.jpg" },
-  { name: "ThahaKhabar", url: "https://www.thahakhabar.com/feed", profile: "" },
-  { name: "NepalSamaya", url: "https://nepalsamaya.com/feed", profile: "" },
-  { name: "Rajdhani", url: "https://rajdhanidaily.com/feed", profile: "" },
-  { name: "NewsOfNepal", url: "https://newsofnepal.com/feed", profile: "" },
+  { name: "ThahaKhabar", url: "https://www.thahakhabar.com/feed", profile: "https://www.thahakhabar.com/uploads/authors/Logo_Thaha.jpg" },
+  { name: "NepalSamaya", url: "https://nepalsamaya.com/feed", profile: "https://nepalsamaya.com/uploads/authors/96208500.png" },
+  { name: "Rajdhani", url: "https://rajdhanidaily.com/feed", profile: "https://rajdhanidaily.com/wp-content/uploads/2021/10/web-logo-resized.jpg" },
+  { name: "NewsOfNepal", url: "https://newsofnepal.com/feed", profile: "https://newsofnepal.com/wp-content/themes/newsofnepalnaya/img/namaste-kamana.jpg" },
   { name: "BizMandu", url: "https://bizmandu.com/feed", profile: "https://www.ashesh.org/app/news/logo/bizmandu.jpg" },
   { name: "Techpana", url: "https://techpana.com/feed", profile: "https://www.ashesh.org/app/news/logo/techpana.jpg" },
-  { name: "Artha Dabali", url: "https://www.arthadabali.com/feed", profile: "https://www.arthadabali.com/wp-content/uploads/2020/01/logo.png" },
-  { name: "Makalu Khabar", url: "https://www.makalukhabar.com/feed", profile: "https://www.makalukhabar.com/wp-content/uploads/2021/03/logo.png" },
-  { name: "SwasthyaKhabar", url: "https://www.swasthyakhabar.com/feed", profile: "" },
-  { name: "Nagarik News", url: "https://nagariknews.nagariknetwork.com/feed", profile: "https://staticcdn.nagariknetwork.com/images/default-image.png" },
-  { name: "BBC Nepali", url: "https://www.bbc.com/nepali/index.xml", profile: "https://news.bbcimg.co.uk/nol/shared/img/bbc_news_120x60.gif" },
+  { name: "Artha Dabali", url: "https://www.arthadabali.com/feed", profile: "https://www.arthadabali.com/users_upload/1603365124-j5Ga9-image_2020-10-22_165655.png" },
+  { name: "Makalu Khabar", url: "https://www.makalukhabar.com/feed", profile: "https://www.makalukhabar.com/wp-content/uploads/2023/10/Final-icon-Logo-2023.png" },
+  { name: "SwasthyaKhabar", url: "https://swasthyakhabar.com/feed", profile: "https://swasthyakhabar.com/uploads/authors/37126900.jpg" },
+  { name: "Nagarik News", url: "https://nagariknews.nagariknetwork.com/feed", profile: "https://images.nagariknewscdn.com/thumbs/authors/nagarik-150x150.jpg" },
+  { name: "BBC Nepali", url: "https://www.bbc.com/nepali/index.xml", profile: "https://www.ashesh.org/app/news/logo/bbcnepali.jpg" },
 ];
 
-// ================= HELPERS =================
+const CATEGORIES = {
+  business: ["अर्थ", "व्यापार", "बैंक", "उत्पादन", "सेयर", "शेयर", "निवेश", "आर्थिक"],
+  health: ["स्वास्थ्य", "रोग", "चिकित्सा", "अस्पताल", "कोरोना", "अस्पताल","अस्पतालको", "खोप","दादुरा", "रक्तचाप", "मुटु","माइग्रेन","अल्जाइमर", "झाडापखाला", "कब्जियत","हेपाटाइटिस", "डेङ्गु", "टाइफाइड", "एड्स", "मधुमेह", "डिप्रेसन", "थाइराइड", "क्यान्सर"],
+  politics: ["राजनीति", "सरकार", "चुनावको", "प्रधानमन्त्री", "मन्त्री", "संसद", "पार्टी","फोरम", "दल","काँग्रेस","जनमोर्चा", "एमाले", "माओवादी", "रास्वपा", "राप्रपा", "जसपा", "लोसपा", "चुनाव","निर्वाचन"],
+  accident: ["दुर्घटना", "मृत्यु", "बेपत्ता", "घाइते", "हत्या", "आगो", "विस्फोट", "accident", "death", "killed", "injured", "fire"],
+  sports: ["खेल", "क्रिकेट", "फुटबल", "गोल", "टिम", "sports", "cricket", "football", "match"],
+  technology: ["प्रविधि", "टेक", "मोबाइल", "इन्टरनेट", "एआई", "कम्प्युटर", "लापटप", "डेटा", "नेटवर्क", "भर्चुअल", "मेसिन"],
+};
+
+function detectCategory(title = "", description = "") {
+  const text = `${title} ${description}`.toLowerCase();
+
+  for (const [category, keywords] of Object.entries(CATEGORIES)) {
+    for (const k of keywords) {
+      if (text.includes(k.toLowerCase())) {
+        return category;
+      }
+    }
+  }
+  return "general";
+}
+
+
 function cleanText(text = "") {
   return text.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
 }
@@ -130,17 +152,17 @@ function getNewsScore(article) {
 
 // ================= SEND PUSH =================
 async function sendPushNotification({ title, body, url }) {
-  try {
-    await oneSignalClient.createNotification({
-      app_id: process.env.ONESIGNAL_APP_ID,
-      headings: { en: title },
-      contents: { en: body || "ताजा समाचार" },
-      included_segments: ["All"],
+  await oneSignalClient.createNotification({
+    app_id: process.env.ONESIGNAL_APP_ID,
+    headings: { en: title },
+    contents: { en: body || "ताजा समाचार" },
+    included_segments: ["All"],
+    data: {
+      click_action: "OPEN_NEWS",
       url,
-    });
-  } catch (err) {
-    console.error("❌ OneSignal ERROR:", err.body || err);
-  }
+      title,
+    },
+  });
 }
 
 // ================= PROCESS NOTIFICATIONS =================
@@ -205,6 +227,7 @@ async function fetchAllFeeds() {
             image: image || feed.profile || "",
             pubDate: cleanPubDate(item.pubDate),
             profile: feed.profile,
+            category: detectCategory(item.title, item.contentSnippet),
           });
         }
       } catch {}
@@ -231,6 +254,7 @@ async function fetchFeedsForCron() {
             description: cleanText(item.contentSnippet || ""),
             link: item.link,
             pubDate: cleanPubDate(item.pubDate),
+            category: detectCategory(item.title, item.contentSnippet),
           });
         }
       } catch {}
